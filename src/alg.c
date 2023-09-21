@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   alg.c                                              :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ahornstr <ahornstr@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/17 14:35:57 by ahornstr      #+#    #+#                 */
-/*   Updated: 2023/08/03 16:20:30 by ahornstr      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   alg.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/17 14:35:57 by ahornstr          #+#    #+#             */
+/*   Updated: 2023/09/13 20:44:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 // 	// 
 // }
 
-// thread_string malloced sizeof p_thread * amount of philos\
+// thread_string malloced sizeof p_thread * amount of philos
 // while loop to init all the threads
 //
 //

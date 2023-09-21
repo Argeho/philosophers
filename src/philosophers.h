@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   philosophers.h                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ahornstr <ahornstr@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/16 14:08:32 by ahornstr      #+#    #+#                 */
-/*   Updated: 2023/08/05 15:42:52 by ahornstr      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/16 14:08:32 by ahornstr          #+#    #+#             */
+/*   Updated: 2023/09/13 23:08:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_phil
 // main.c
 int		arg_fill(t_phil *phil, char **argv);
 int	fork_init(t_phil *phil);
+int	free_struct(t_phil *phil);
 
 
 // alg.c
@@ -57,6 +58,9 @@ void	error(char *error_msg);
 
 // utils.c
 int		ft_atoi(const char *str);
+int		string_digit(char *str);
+long int	get_time(void);
+
 
 // trash
 void	print_two_d(char **str);
