@@ -5,7 +5,9 @@ OBJ_DIR = obj
 SRC_UTILS = main.c\
 			error.c\
 			utils.c\
-			alg.c
+			alg.c\
+			time.c\
+			init.c\
 
 vpath %.c src
 

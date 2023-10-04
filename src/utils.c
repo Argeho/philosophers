@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 16:14:51 by ahornstr          #+#    #+#             */
-/*   Updated: 2023/09/13 23:03:27 by marvin           ###   ########.fr       */
+/*   Updated: 2023/10/04 22:32:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,19 @@ long int	get_time(void)
 	if (gettimeofday(&current_time, NULL) == -1)
 		return (0);
 	time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
-	printf("time = %ld\n", time);
 	return (time);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 || *s2)
+	{
+		if ((unsigned char)*s1 != (unsigned char)*s2)
+			return ((unsigned char)*s1 - (unsigned char)*s2);
+		if (!*s1 || !*s2)
+			return (0);
+		s1++;
+		s2++;
+	}
+	return (0);
 }
