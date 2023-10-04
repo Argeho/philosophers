@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:08:55 by ahornstr          #+#    #+#             */
-/*   Updated: 2023/10/05 00:32:17 by marvin           ###   ########.fr       */
+/*   Updated: 2023/10/05 00:34:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	is_num(char **argv)
 	{
 		if (!(string_digit(argv[i])) || !(ft_atoi(argv[i])))
 			return (1);
-		// if (argv[i] > )
 		i++;
 	}
 	return (0);
