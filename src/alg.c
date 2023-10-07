@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 14:35:57 by ahornstr          #+#    #+#             */
-/*   Updated: 2023/10/05 00:29:55 by marvin           ###   ########.fr       */
+/*   Updated: 2023/10/07 00:09:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// to fix: a mutex is neaded to check death. the max_ate and quit variables
+// are not in mutexed. find another way pls
 
 int	alive(t_arg *arg)
 {
@@ -27,7 +29,7 @@ int	alive(t_arg *arg)
 	{
 		arg->p_structs[i].last_meal = tod();
 		if (pthread_create(&arg->p_structs[i].philo_thread, NULL, alg, &(arg->p_structs[i])))
-			return (0);
+			return (0);	
 	}
 	check_death(arg, arg->p_structs);
 	pthread_mutex_unlock(&arg->print);
@@ -69,20 +71,22 @@ void	*alg(void *inp)
 	arg = phil->arg;
 	if (arg->phil_count > 1 && phil->index % 2)
 		go_to_sleep(arg->t_t_eat / 50, arg);
+	printf(BLUE"here quit = %d && max_ate = %lld\n"NORMAL, arg->quit, arg->max_ate);
 	while (!arg->quit && !arg->max_ate)
 	{
-		grab_fork(phil);
+		
+		// grab_fork(phil);
 		start_eating(phil);
 		print_status(phil, "is sleeping");
 		go_to_sleep(arg->t_t_sleep, arg);
-		print_status(phil, "is sleeping");
+		print_status(phil, "is thinking");
 	}
 	return (NULL);
 }
 
-void	go_to_sleep(long time, t_arg *arg)
+void	go_to_sleep(unsigned long time, t_arg *arg)
 {
-	long	sleepy;
+	unsigned long	sleepy;
 
 	sleepy = tod();
 	while(!arg->quit)
@@ -102,8 +106,8 @@ void	check_death(t_arg *arg, t_phil *phil)
 		i = -1;
 		while (++i < arg->phil_count && !arg->quit)
 		{
-			pthread_mutex_unlock(&arg->chomp);
-			if ((int)(get_time() - phil[i].last_meal) >= arg->t_t_die)
+			pthread_mutex_lock(&arg->chomp);
+			if ((get_time() - phil[i].last_meal) >= arg->t_t_die)
 			{
 				print_status(&phil[i], "died");
 				arg->quit = 1;
@@ -139,20 +143,16 @@ void	print_status(t_phil *phil, char *status)
 
 void	start_eating(t_phil *phil)
 {
-	pthread_mutex_lock(&phil->arg->chomp);
-	print_status(phil, "is eating");
-	phil->last_meal = tod();
-	pthread_mutex_unlock(&phil->arg->chomp);
-	go_to_sleep(phil->arg->t_t_eat, phil->arg);
-	phil->eaten++;
-	pthread_mutex_unlock(&phil->arg->fork[phil->right]);
-	pthread_mutex_unlock(&phil->arg->fork[phil->left]);
-}
-
-void	grab_fork(t_phil *phil)
-{
 	pthread_mutex_lock(&phil->arg->fork[phil->left]);
 	print_status(phil, "has taken a fork");
 	pthread_mutex_lock(&phil->arg->fork[phil->right]);
 	print_status(phil, "has taken a fork");
+	pthread_mutex_lock(&phil->arg->chomp);
+	print_status(phil, "is eating");
+	phil->last_meal = tod();
+	phil->eaten++;
+	pthread_mutex_unlock(&phil->arg->chomp);
+	go_to_sleep(phil->arg->t_t_eat, phil->arg);
+	pthread_mutex_unlock(&phil->arg->fork[phil->right]);
+	pthread_mutex_unlock(&phil->arg->fork[phil->left]);
 }

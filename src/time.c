@@ -15,9 +15,7 @@
 long	tod(void)
 {
 	struct timeval	time;
-	long			milli;
 
 	gettimeofday(&time, NULL);
-	milli = (time.tv_sec * 1000) + (time.tv_usec * 0.001);
-	return (milli);
+	return ((time.tv_sec * (unsigned long)1000) + (time.tv_usec / 1000));
 }

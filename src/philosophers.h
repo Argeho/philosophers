@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:08:32 by ahornstr          #+#    #+#             */
-/*   Updated: 2023/10/04 23:41:06 by marvin           ###   ########.fr       */
+/*   Updated: 2023/10/06 23:40:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_phil
 	int				left;
 	int				right;
 	int				eaten;
-	int				last_meal;
+	long long		last_meal;
 }		t_phil;
 
 // main.c
@@ -67,7 +67,7 @@ void	grab_fork(t_phil *phil);
 void	start_eating(t_phil *phil);
 void	*alg(void *inp);
 int		alive(t_arg *arg);
-void	go_to_sleep(long time, t_arg *arg);
+void	go_to_sleep(unsigned long time, t_arg *arg);
 void	exit_threads(t_arg *arg);
 
 
