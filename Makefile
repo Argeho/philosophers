@@ -3,11 +3,11 @@ CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g
 CC = gcc
 OBJ_DIR = obj
 SRC_UTILS = main.c\
-			error.c\
 			utils.c\
 			alg.c\
 			time.c\
 			init.c\
+			error.c\
 
 vpath %.c src
 
@@ -32,6 +32,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: libft
-
-
-# fsanitize=threads -g
