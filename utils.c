@@ -50,6 +50,7 @@ void	free_all(t_arg	*arg, t_phil *philos)
 	p_count = arg->phil_count;
 	pthread_mutex_destroy(&(arg->chomp));
 	pthread_mutex_destroy(&(arg->print));
+	pthread_mutex_destroy(&(arg->dead_lock));
 	i = -1;
 	while (++i < p_count)
 		pthread_mutex_destroy(&(arg->forks[i].fork));
@@ -57,12 +58,14 @@ void	free_all(t_arg	*arg, t_phil *philos)
 	free(philos);
 }
 
-void	print_status(char *status, t_phil *philo, int type)
+void	print_status(char *status, t_phil *philo)
 {
-	pthread_mutex_lock(&(philo->arg->print));
-	if (type == 1)
-		philo->last_meal = tod();
-	if (!philo->arg->dead)
-		printf("%lld ms philo %-3d %s\n", tod() - philo->arg->start, philo->index, status);
-	pthread_mutex_unlock(&(philo->arg->print));
+	size_t	t;
+
+	t = tod() - philo->arg->start;
+	pthread_mutex_lock(&philo->arg->print);
+	if (!philo->arg->dead && !philo->arg->full)
+		printf("%ld ms %d %s\n", t, philo->index, status);
+	pthread_mutex_unlock(&philo->arg->print);
 }
+

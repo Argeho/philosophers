@@ -3,17 +3,20 @@
 void	arg_fill(t_arg *arg, char **argv, int argc)
 {
 	pthread_mutex_init(&arg->chomp, NULL);
-	pthread_mutex_init(&(arg->print), NULL);
+	pthread_mutex_init(&arg->print, NULL);
+	pthread_mutex_init(&arg->dead_lock, NULL);
 	arg->phil_count = atoi(argv[1]);
 	arg->t_t_die = atoi(argv[2]);
 	arg->t_t_eat = atoi(argv[3]);
 	arg->t_t_sleep = atoi(argv[4]);
 	if (argc == 6)
-		arg->max_eat = atoi(argv[5]);
+		arg->eat_max = atoi(argv[5]);
 	else
-		arg->max_eat = INT_MAX;
+		arg->eat_max = -1;
+	arg->full = 0;
 	arg->start = tod();
 	arg->dead = 0;
+	arg->start = tod();
 }
 
 t_fork	*init_forks(int phil_count)
@@ -74,8 +77,8 @@ t_phil	*init_philo(t_arg *arg)
 		philos[i].index = i + 1;
 		philos[i].status = 1;
 		philos[i].eaten = 0;
-		philos[i].last_meal = arg->start;
 		philos[i].arg = arg;
+		philos[i].last_meal = arg->start;
 		i++;
 	}
 	return (philos);

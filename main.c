@@ -14,7 +14,7 @@ int	run(t_arg *arg)
 			return (1);
 		i++;
 	}
-	check_status(philos, arg);
+	check_status(arg);
 	i = -1;
 	while (++i < arg->phil_count)
 		if (pthread_join(philos[i].philo_thread, NULL) != 0)
@@ -27,7 +27,7 @@ int	main(int argc, char **argv)
 	t_arg	arg;
 	t_phil	*philos;
 	t_fork	*forks;
-
+	
 	if (check_arg(argv, argc))
 		return (0);
 	arg_fill(&arg, argv, argc);
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	philos = init_philo(&arg);
 	if (!philos)
 		return (error("set_philo error"), 0);
-	arg.philos = (void *)philos;
+	arg.philos = philos;
 	if (run(&arg))
 		return (1);
 	free_all(&arg, philos);

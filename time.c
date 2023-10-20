@@ -8,11 +8,15 @@ long	tod(void)
 	return (t.tv_sec * 1000 + t.tv_usec / 1000);
 }
 
-void	go_to_sleep(int ms)
+void	go_to_sleep(t_arg *arg, long ms)
 {
-	long			time;
+	long	t;
 
-	time = tod();
-	while (tod() - time < ms)
-		usleep(ms);
+	t = tod();
+	while (!(arg->dead))
+	{
+		if (tod() - t >= ms)
+			break ;
+		usleep(100);
+	}
 }

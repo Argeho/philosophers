@@ -1,6 +1,6 @@
 NAME = philosophers
-CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g
-CC = gcc
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
+CC = cc
 OBJ_DIR = obj
 SRC_UTILS = main.c\
 			utils.c\
