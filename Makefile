@@ -11,8 +11,8 @@
 # **************************************************************************** #
 
 NAME = philo
-CFLAGS = -Wall -Wextra -Werror
-CC = gcc
+CFLAGS = -Wall -Wextra -Werror -Ofast
+CC = cc
 OBJ_DIR = obj
 SRC_UTILS = main.c\
 			utils.c\
@@ -41,7 +41,6 @@ $(NAME): $(OBJ_FILES)
 
 clean:
 	rm -rf $(OBJ_DIR)
-	rm -f $(NAME)
 
 fclean: clean
 	rm -f $(NAME)

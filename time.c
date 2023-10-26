@@ -34,6 +34,6 @@ void	fork_order(t_phil *phil)
 	long	time_to_live;
 
 	time_to_live = phil->arg->t_t_die - (tod() - phil->last_meal);
-	if (time_to_live > 0)
-		usleep(time_to_live / 1000);
+	if (time_to_live)
+		usleep(time_to_live / 10);
 }

@@ -75,27 +75,23 @@ void	check_status(t_phil *philos, t_arg *arg)
 int	eat(t_phil	*phil)
 {
 	fork_order(phil);
+	grab_forks(phil, &(phil->left->fork));
+	fork_order(phil);
 	grab_forks(phil, &(phil->right->fork));
-	if (phil->left)
+	pthread_mutex_lock(&(phil->arg->chomp));
+	if (phil->arg->dead)
 	{
-		fork_order(phil);
-		grab_forks(phil, &(phil->left->fork));
-		pthread_mutex_lock(&(phil->arg->chomp));
-		if (phil->arg->dead)
-		{
-			pthread_mutex_unlock(&(phil->left->fork));
-			pthread_mutex_unlock(&(phil->right->fork));
-			pthread_mutex_unlock(&(phil->arg->chomp));
-			return (0);
-		}
-		phil->eaten++;
-		print_status("is eating", phil, 1);
-		pthread_mutex_unlock(&(phil->arg->chomp));
-		go_to_sleep(phil->arg->t_t_eat);
-	}
-	pthread_mutex_unlock(&(phil->right->fork));
-	if (phil->left)
 		pthread_mutex_unlock(&(phil->left->fork));
+		pthread_mutex_unlock(&(phil->right->fork));
+		pthread_mutex_unlock(&(phil->arg->chomp));
+		return (0);
+	}
+	phil->eaten++;
+	print_status("is eating", phil, 1);
+	pthread_mutex_unlock(&(phil->arg->chomp));
+	go_to_sleep(phil->arg->t_t_eat);
+	pthread_mutex_unlock(&(phil->right->fork));
+	pthread_mutex_unlock(&(phil->left->fork));
 	return (1);
 }
 
@@ -112,8 +108,8 @@ void	*alive(void	*philo)
 	}
 	if (phil->index % 2 == 0)
 	{
-		print_status("is sleeping", phil, 0);
-		usleep(1000);
+		print_status("is thinking", phil, 0);
+		usleep(phil->arg->t_t_eat * 100);
 	}
 	while (check_dead(phil) && phil->status && phil->eaten < phil->arg->max_eat)
 	{

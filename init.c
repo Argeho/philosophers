@@ -6,7 +6,7 @@
 /*   By: ahornstr <ahornstr@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 10:23:37 by ahornstr      #+#    #+#                 */
-/*   Updated: 2023/10/21 16:18:21 by ahornstr      ########   odam.nl         */
+/*   Updated: 2023/10/26 18:36:49 by ahornstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int	arg_fill(t_arg *arg, char **argv, int argc)
 		return (0);
 	if (pthread_mutex_init(&(arg->print), NULL))
 		return (0);
-	arg->phil_count = atoi(argv[1]);
+	arg->phil_count = ft_atoi(argv[1]);
 	if (arg->phil_count > 200)
 		return (error("max 200 philos plz lol"), 0);
-	arg->t_t_die = atoi(argv[2]);
-	arg->t_t_eat = atoi(argv[3]);
-	arg->t_t_sleep = atoi(argv[4]);
+	arg->t_t_die = ft_atoi(argv[2]);
+	arg->t_t_eat = ft_atoi(argv[3]);
+	arg->t_t_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		arg->max_eat = atoi(argv[5]);
+		arg->max_eat = ft_atoi(argv[5]);
 	else
 		arg->max_eat = INT_MAX;
 	arg->start = tod();
@@ -67,34 +67,9 @@ t_fork	*init_forks(int phil_count)
 	{
 		if (pthread_mutex_init(&(forks[i].fork), NULL))
 			return (NULL);
-		forks[i].free = 1;
 		i++;
 	}
 	return (forks);
-}
-
-t_fork	*place_forks(int i, t_arg *arg, int l_or_r)
-{
-	if (l_or_r == 0)
-	{
-		if (i == arg->phil_count - 1)
-			return (&(arg->forks[0]));
-		else
-			return (&(arg->forks[i]));
-	}
-	else
-	{
-		if (i == arg->phil_count - 1)
-		{
-			if (arg->phil_count == 1)
-				return (NULL);
-			else
-				return (&(arg->forks[i]));
-		}
-		else
-			return (&(arg->forks[i + 1]));
-	}
-	return (NULL);
 }
 
 t_phil	*init_philo(t_arg *arg)
@@ -108,8 +83,11 @@ t_phil	*init_philo(t_arg *arg)
 		return (NULL);
 	while (i < arg->phil_count)
 	{
-		philos[i].right = place_forks(i, arg, 0);
-		philos[i].left = place_forks(i, arg, 1);
+		philos[i].right = &arg->forks[i];
+		if (i != arg->phil_count - 1)
+			philos[i].left = &arg->forks[i + 1];
+		else
+			philos[i].left = &arg->forks[0];
 		philos[i].index = i + 1;
 		philos[i].status = 1;
 		philos[i].eaten = 0;

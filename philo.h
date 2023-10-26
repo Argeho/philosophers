@@ -6,7 +6,7 @@
 /*   By: ahornstr <ahornstr@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/16 10:23:54 by ahornstr      #+#    #+#                 */
-/*   Updated: 2023/10/21 16:55:46 by ahornstr      ########   odam.nl         */
+/*   Updated: 2023/10/26 18:36:44 by ahornstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 typedef struct s_fork
 {
 	pthread_mutex_t	fork;
-	int				free;
 }				t_fork;
 
 typedef struct s_arg
@@ -75,7 +74,6 @@ void	*alive(void	*philo);
 void	go_to_sleep(int ms);
 long	tod(void);
 t_fork	*init_forks(int num);
-t_fork	*place_forks(int i, t_arg *data, int type);
 t_phil	*init_philo(t_arg *data);
 int		start_threads(t_arg *arg);
 void	fork_order(t_phil *phil);
