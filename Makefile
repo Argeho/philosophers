@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = philo
-CFLAGS = -Wall -Wextra -Werror -Ofast
+CFLAGS = -Wall -Wextra -Werror -pthread -Ofast
 CC = cc
 OBJ_DIR = obj
 SRC_UTILS = main.c\

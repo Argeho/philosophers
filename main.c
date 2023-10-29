@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahornstr <ahornstr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 10:23:41 by ahornstr          #+#    #+#             */
-/*   Updated: 2023/10/17 13:35:57 by ahornstr         ###   ########.fr       */
+/*   Updated: 2023/10/29 18:29:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,17 @@ int	main(int argc, char **argv)
 		return (0);
 	forks = init_forks(arg.phil_count);
 	if (!forks)
-		return (error("set_fork error"), 0);
+		return (error_arg(&arg, "set_fork error"), 0);
 	arg.forks = forks;
 	philos = init_philo(&arg);
 	if (!philos)
+	{
+		free_all(&arg, philos);
 		return (error("set_philo error"), 0);
+	}
 	arg.philos = (void *)philos;
 	if (start_threads(&arg))
-		return (1);
+		return (free_all(&arg, philos), 0);
 	free_all(&arg, philos);
-	return (0);
+	return (1);
 }

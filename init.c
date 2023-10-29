@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   init.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ahornstr <ahornstr@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/10/16 10:23:37 by ahornstr      #+#    #+#                 */
-/*   Updated: 2023/10/26 18:36:49 by ahornstr      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/16 10:23:37 by ahornstr          #+#    #+#             */
+/*   Updated: 2023/10/29 18:00:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 int	arg_fill(t_arg *arg, char **argv, int argc)
 {
 	if (pthread_mutex_init(&arg->chomp, NULL))
-		return (0);
+		return (error("chomp_mutex failed"), 0);
 	if (pthread_mutex_init(&(arg->print), NULL))
-		return (0);
+	{
+		pthread_mutex_destroy(&arg->chomp);
+		return (error("print_mutex failed"), 0);
+	}
 	arg->phil_count = ft_atoi(argv[1]);
 	if (arg->phil_count > 200)
-		return (error("max 200 philos plz lol"), 0);
+		return (error_arg(arg, "max 200 philos"), 0);
 	arg->t_t_die = ft_atoi(argv[2]);
 	arg->t_t_eat = ft_atoi(argv[3]);
 	arg->t_t_sleep = ft_atoi(argv[4]);
@@ -66,7 +69,15 @@ t_fork	*init_forks(int phil_count)
 	while (i < phil_count)
 	{
 		if (pthread_mutex_init(&(forks[i].fork), NULL))
+		{
+			while (i > 0)
+			{
+				pthread_mutex_destroy(&(forks[i].fork));
+				i--;
+			}
+			free(forks);
 			return (NULL);
+		}
 		i++;
 	}
 	return (forks);

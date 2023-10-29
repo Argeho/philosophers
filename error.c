@@ -26,7 +26,14 @@ void	arg_error(void)
 
 void	error(char *error_msg)
 {
-	printf("Error\n%s\n", error_msg);
+		printf("Error\n%s\n", error_msg);
+}
+
+void	error_arg(t_arg	*arg, char *msg)
+{
+	pthread_mutex_destroy(&arg->chomp);
+	pthread_mutex_destroy(&arg->print);
+	error(msg);
 }
 
 int	string_digit(char *str)

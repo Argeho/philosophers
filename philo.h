@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   philo.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ahornstr <ahornstr@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/10/16 10:23:54 by ahornstr      #+#    #+#                 */
-/*   Updated: 2023/10/26 18:36:44 by ahornstr      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/16 10:23:54 by ahornstr          #+#    #+#             */
+/*   Updated: 2023/10/29 17:55:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,7 @@ t_fork	*init_forks(int num);
 t_phil	*init_philo(t_arg *data);
 int		start_threads(t_arg *arg);
 void	fork_order(t_phil *phil);
+void	error_arg(t_arg	*arg, char *msg);
+void	error_phil(t_phil *phil, char *msg, int type);
 
 #endif

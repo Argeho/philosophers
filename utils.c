@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   utils.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: ahornstr <ahornstr@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/10/16 10:24:06 by ahornstr      #+#    #+#                 */
-/*   Updated: 2023/10/21 15:46:31 by ahornstr      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/16 10:24:06 by ahornstr          #+#    #+#             */
+/*   Updated: 2023/10/29 18:02:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	free_all(t_arg	*arg, t_phil *philos)
 	while (++i < p_count)
 		pthread_mutex_destroy(&(arg->forks[i].fork));
 	free(arg->forks);
-	free(philos);
+	if (philos)
+		free(philos);
 }
 
 void	print_status(char *status, t_phil *philo, int type)

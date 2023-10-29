@@ -23,7 +23,14 @@ int	start_threads(t_arg *arg)
 	{
 		if (pthread_create(&(philos[i].philo_thread), \
 		NULL, &alive, &philos[i]) != 0)
+		{
+			while (i > 0)
+			{
+				pthread_join(philos[i].philo_thread, NULL);
+				i--;
+			}
 			return (1);
+		}
 		i++;
 	}
 	check_status(philos, arg);
